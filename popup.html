@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      width: 320px;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a2e;
+      color: #eee;
+    }
+    
+    h1 {
+      font-size: 16px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .emoji {
+      font-size: 20px;
+    }
+    
+    .section {
+      margin-bottom: 16px;
+    }
+    
+    label {
+      display: block;
+      font-size: 12px;
+      color: #aaa;
+      margin-bottom: 6px;
+    }
+    
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #333;
+      border-radius: 6px;
+      background: #16213e;
+      color: #fff;
+      font-size: 13px;
+    }
+    
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #e94560;
+    }
+    
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #333;
+      border-radius: 6px;
+      background: #16213e;
+      color: #fff;
+      font-size: 12px;
+      font-family: monospace;
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.4;
+    }
+    
+    textarea:focus {
+      outline: none;
+      border-color: #e94560;
+    }
+    
+    .hint {
+      font-size: 10px;
+      color: #666;
+      margin-top: 6px;
+    }
+    
+    .reset-link {
+      color: #e94560;
+      cursor: pointer;
+      font-size: 10px;
+    }
+    
+    .reset-link:hover {
+      text-decoration: underline;
+    }
+    
+    button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      background: #e94560;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    button:hover {
+      background: #ff6b6b;
+    }
+    
+    .status {
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      text-align: center;
+    }
+    
+    .status.success {
+      background: #0f3d3e;
+      color: #00ff88;
+    }
+    
+    .status.error {
+      background: #3d0f0f;
+      color: #ff6b6b;
+    }
+    
+    .status.info {
+      background: #0f2d3d;
+      color: #6bb3ff;
+    }
+    
+    .divider {
+      height: 1px;
+      background: #333;
+      margin: 16px 0;
+    }
+    
+    .info-text {
+      font-size: 11px;
+      color: #666;
+      line-height: 1.5;
+    }
+    
+    .toggle-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+    }
+    
+    .toggle-label {
+      font-size: 13px;
+      color: #ccc;
+    }
+    
+    .toggle {
+      position: relative;
+      width: 44px;
+      height: 24px;
+    }
+    
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #333;
+      border-radius: 24px;
+      transition: 0.3s;
+    }
+    
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background: #fff;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+    
+    .toggle input:checked + .toggle-slider {
+      background: #e94560;
+    }
+    
+    .toggle input:checked + .toggle-slider:before {
+      transform: translateX(20px);
+    }
+  </style>
+</head>
+<body>
+  <h1><span class="emoji">🎓</span> YouTube Edu Filter</h1>
+  
+  <div class="section">
+    <label>LM Studio API URL</label>
+    <input type="text" id="apiUrl" placeholder="http://localhost:1234/v1/chat/completions">
+  </div>
+  
+  <div class="section">
+    <div class="toggle-row">
+      <span class="toggle-label">Enable Extension</span>
+      <label class="toggle">
+        <input type="checkbox" id="enabled" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <div class="toggle-row">
+      <span class="toggle-label">Block All Shorts</span>
+      <label class="toggle">
+        <input type="checkbox" id="blockShorts" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+  </div>
+  
+  <div class="section">
+    <label>Classification Prompt <span class="reset-link" id="resetPrompt">(Reset to default)</span></label>
+    <textarea id="prompt" rows="8" placeholder="Enter custom prompt..."></textarea>
+    <p class="hint">Use {title}, {channel}, {description} as placeholders for video metadata.</p>
+  </div>
+  
+  <button id="saveBtn">Save Settings</button>
+  <button id="testBtn" style="margin-top: 8px; background: #16213e; border: 1px solid #333;">Test Connection</button>
+  
+  <div id="status" class="status" style="display: none;"></div>
+  
+  <div class="divider"></div>
+  
+  <p class="info-text">
+    Make sure LM Studio is running with a model loaded. The extension will analyze video metadata to determine if content is educational.
+  </p>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

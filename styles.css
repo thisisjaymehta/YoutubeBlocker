@@ -1,0 +1,55 @@
+/* Styles for YouTube Educational Filter overlay */
+
+#yt-edu-filter-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 999999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.yt-edu-filter-content {
+  text-align: center;
+  padding: 40px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-radius: 16px;
+  border: 1px solid #e94560;
+  max-width: 400px;
+  box-shadow: 0 20px 60px rgba(233, 69, 96, 0.3);
+}
+
+.yt-edu-filter-content h2 {
+  font-size: 28px;
+  color: #fff;
+  margin-bottom: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.yt-edu-filter-content p {
+  font-size: 16px;
+  color: #aaa;
+  margin-bottom: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.5;
+}
+
+.yt-edu-filter-content p:last-child {
+  color: #e94560;
+  font-size: 14px;
+  margin-bottom: 0;
+}
