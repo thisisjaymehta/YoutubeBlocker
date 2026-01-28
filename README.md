@@ -38,11 +38,18 @@ A Chrome/Firefox extension that blocks non-educational YouTube videos using a lo
    git clone https://github.com/YOUR_USERNAME/YoutubeBlocker.git
    ```
 
-2. Open Firefox and navigate to `about:debugging#/runtime/this-firefox`
+2. **Rename the manifest file:**
+   ```bash
+   # In the cloned folder, replace manifest.json with Firefox version
+   mv manifest.json manifest.chrome.json
+   mv manifest.firefox.json manifest.json
+   ```
 
-3. Click "Load Temporary Add-on..."
+3. Open Firefox and navigate to `about:debugging#/runtime/this-firefox`
 
-4. Select the `manifest.json` file from the cloned folder
+4. Click "Load Temporary Add-on..."
+
+5. Select the `manifest.json` file from the cloned folder
 
 > **Note:** For permanent Firefox installation, the extension needs to be signed by Mozilla or installed in Firefox Developer/Nightly with `xpinstall.signatures.required` set to `false`.
 
