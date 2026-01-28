@@ -1,6 +1,6 @@
 # YouTube Educational Filter
 
-A Chrome extension that blocks non-educational YouTube videos using a local LLM (LM Studio) to analyze video content.
+A Chrome/Firefox extension that blocks non-educational YouTube videos using a local LLM (LM Studio) to analyze video content.
 
 ## Features
 
@@ -9,13 +9,16 @@ A Chrome extension that blocks non-educational YouTube videos using a local LLM 
 - 🔄 **Auto-Redirect** - Redirects non-educational videos to YouTube homepage
 - ⚙️ **Customizable Prompt** - Modify the AI classification prompt to your needs
 - 💾 **Smart Caching** - Caches results to avoid repeated API calls
+- 🌐 **Cross-Browser** - Works on both Chrome and Firefox
 
 ## Requirements
 
-- Google Chrome browser
+- Google Chrome or Mozilla Firefox browser
 - [LM Studio](https://lmstudio.ai/) running locally with a model loaded
 
 ## Installation
+
+### Chrome
 
 1. Clone this repository:
    ```bash
@@ -27,6 +30,21 @@ A Chrome extension that blocks non-educational YouTube videos using a local LLM 
 3. Enable "Developer mode" (toggle in top right)
 
 4. Click "Load unpacked" and select the cloned folder
+
+### Firefox
+
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/YoutubeBlocker.git
+   ```
+
+2. Open Firefox and navigate to `about:debugging#/runtime/this-firefox`
+
+3. Click "Load Temporary Add-on..."
+
+4. Select the `manifest.json` file from the cloned folder
+
+> **Note:** For permanent Firefox installation, the extension needs to be signed by Mozilla or installed in Firefox Developer/Nightly with `xpinstall.signatures.required` set to `false`.
 
 ## Setup
 
